@@ -23,7 +23,7 @@ def get_access_token(code):
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
         'code': code,
-        'redirect_uri': 'http://localhost:8080/login/callback',
+        'redirect_uri': 'http://localhost:5000/login/callback',
         'state': 'NotSoRandom'
     }, headers={
         'Accept': 'application/json'
@@ -75,3 +75,10 @@ def authenticate(code):
     token = jwt.encode(claimset, 'secretsecret1234secretsecret1234', algorithm='HS256')
 
     return {'token': token.decode()}
+
+if __name__ == "__main__":
+    app.run(
+        host=os.environ.get("BACKEND_HOST", "127.0.0.1"),
+        port=5000,
+        debug=True
+    )

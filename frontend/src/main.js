@@ -18,6 +18,7 @@ Vue.use(VueRouter)
 
 Vue.prototype.$http = Axios
 
+/* eslint-disable */
 const someUnusedProperty = new Vue({
   data: {
     myTestProperty: 2020
@@ -26,6 +27,7 @@ const someUnusedProperty = new Vue({
     console.log('myTestProperty is: ' + this.myTestProperty);
   }
 });
+/* eslint-enable */
 
 const jwt = {
   decode(token) {

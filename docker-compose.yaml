@@ -1,0 +1,18 @@
+services:
+  auth:
+    build:
+      dockerfile: ./docker/auth.Dockerfile
+    environment:
+      - BACKEND_HOST=auth
+    ports:
+      - "5000:5000"
+  frontend:
+    build:
+      dockerfile: ./docker/frontend.Dockerfile
+    ports:
+      - "8080:8080"
+  gallery:
+    build:
+      dockerfile: ./docker/gallery.Dockerfile
+    ports:
+      - "8081:8081"
