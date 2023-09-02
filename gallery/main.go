@@ -1,28 +1,27 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
-	"strings"
-	"errors"
-	"database/sql"
-	"strconv"
 	"os"
+	"strconv"
+	"strings"
 
-	"github.com/gorilla/mux"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gorilla/mux"
 	_ "github.com/mattn/go-sqlite3"
-
 )
 
 type Configuration struct {
-	Host 		string	`json:"host"`
-	Port 		int		`json:"port"`
+	Host string `json:"host"`
+	Port int    `json:"port"`
 
-	Database	string	`json:"database"`
-	Secret 		string	`json:"secret"`
+	Database       string   `json:"database"`
+	Secret         string   `json:"secret"`
 	AllowedOrigins []string `json:"allowed-origins"`
 }
 
@@ -63,7 +62,7 @@ func GetDb() *sql.DB {
 func InitializeDb() {
 	db := GetDb()
 
-	tables := [...]string {
+	tables := [...]string{
 		`CREATE TABLE IF NOT EXISTS 'gallery'
 		(id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT UNIQUE, title TEXT NOT NULL,
 			description TEXT, created_at DATETIME, updated_at DATETIME);`,
@@ -130,13 +129,13 @@ func SetCORSPolicy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")	
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 }
 
 type Gallery struct {
-	ID 				int64 		`json:"id"`
-	Title 			string		`json:"title"`
-	Description		string		`json:"description"`
+	ID          int64  `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
 }
 
 func (g *Gallery) Get(profile *OctoProfile) error {
@@ -153,7 +152,7 @@ func (g *Gallery) Get(profile *OctoProfile) error {
 		return err
 	}
 	defer rs.Close()
-	
+
 	if rs.Next() {
 		rs.Scan(&g.ID, &g.Title, &g.Description)
 
@@ -161,8 +160,8 @@ func (g *Gallery) Get(profile *OctoProfile) error {
 	} else {
 		g.ID = -1
 		g.Title = "The Empty gallery"
-		g.Description = "This gallery is in desparate need of some art!" 
-		
+		g.Description = "This gallery is in desparate need of some art!"
+
 		return g.Create(profile)
 	}
 }
@@ -176,7 +175,7 @@ func (g *Gallery) Create(profile *OctoProfile) error {
 	}
 	defer stmt.Close()
 
-	r , err := stmt.Exec(profile.Login, g.Title, g.Description)
+	r, err := stmt.Exec(profile.Login, g.Title, g.Description)
 	if err != nil {
 		return err
 	}
@@ -203,7 +202,7 @@ func (g Gallery) Update(profile *OctoProfile) error {
 	}
 	defer stmt.Close()
 
-	r , err := stmt.Exec()
+	r, err := stmt.Exec()
 	if err != nil {
 		return err
 	}
@@ -229,7 +228,7 @@ func (g Gallery) GetArtPiece(id int64) (*ArtPiece, error) {
 		return nil, err
 	}
 	defer rs.Close()
-	
+
 	if rs.Next() {
 		art_piece := &ArtPiece{}
 		rs.Scan(&art_piece.ID, &art_piece.Title, &art_piece.Description, &art_piece.Stars, &art_piece.Uri)
@@ -240,7 +239,7 @@ func (g Gallery) GetArtPiece(id int64) (*ArtPiece, error) {
 	return nil, errors.New("Art piece seems to be missing!")
 }
 
-func (g Gallery) GetAllArtPieces() ([]ArtPiece, error)  {
+func (g Gallery) GetAllArtPieces() ([]ArtPiece, error) {
 	db := GetDb()
 
 	stmt, err := db.Prepare(`SELECT id, title, description, stars, uri FROM art_piece WHERE gallery_id = ?`)
@@ -255,7 +254,7 @@ func (g Gallery) GetAllArtPieces() ([]ArtPiece, error)  {
 	}
 	defer rs.Close()
 	art_pieces := []ArtPiece{}
-	
+
 	for rs.Next() {
 		art_piece := &ArtPiece{}
 		rs.Scan(&art_piece.ID, &art_piece.Title, &art_piece.Description, &art_piece.Stars, &art_piece.Uri)
@@ -267,11 +266,11 @@ func (g Gallery) GetAllArtPieces() ([]ArtPiece, error)  {
 }
 
 type ArtPiece struct {
-	ID				int64		`json:"id"`
-	Title			string		`json:"title"`
-	Description		string		`json:"description"`
-	Stars			int			`json:"stars"`
-	Uri				string		`json:"uri"`
+	ID          int64  `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Stars       int    `json:"stars"`
+	Uri         string `json:"uri"`
 }
 
 func (p *ArtPiece) Create(gallery Gallery) error {
@@ -283,7 +282,7 @@ func (p *ArtPiece) Create(gallery Gallery) error {
 	}
 	defer stmt.Close()
 
-	r , err := stmt.Exec(p.Title, p.Description, p.Uri, gallery.ID)
+	r, err := stmt.Exec(p.Title, p.Description, p.Uri, gallery.ID)
 	if err != nil {
 		return err
 	}
@@ -310,7 +309,7 @@ func (p ArtPiece) Update(gallery Gallery) error {
 	}
 	defer stmt.Close()
 
-	r , err := stmt.Exec(p.Title, p.Description, p.Stars, p.Uri, p.ID, gallery.ID)
+	r, err := stmt.Exec(p.Title, p.Description, p.Stars, p.Uri, p.ID, gallery.ID)
 	if err != nil {
 		return err
 	}
@@ -331,7 +330,7 @@ func (p ArtPiece) Delete(gallery Gallery) error {
 	}
 	defer stmt.Close()
 
-	r , err := stmt.Exec(p.ID, gallery.ID)
+	r, err := stmt.Exec(p.ID, gallery.ID)
 	if err != nil {
 		return err
 	}
@@ -355,14 +354,14 @@ func GetProfile(r *http.Request) *OctoProfile {
 
 func GalleryHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-		case http.MethodGet:
-			GetGalleryHandler(w, r)
-		case http.MethodPut:
-			UpdateGalleryHandler(w, r)
-		case http.MethodOptions:
-			return
-		default:
-			http.Error(w, "Method not permitted", http.StatusBadRequest)
+	case http.MethodGet:
+		GetGalleryHandler(w, r)
+	case http.MethodPut:
+		UpdateGalleryHandler(w, r)
+	case http.MethodOptions:
+		return
+	default:
+		http.Error(w, "Method not permitted", http.StatusBadRequest)
 	}
 }
 
@@ -390,6 +389,8 @@ func GetGalleryHandler(w http.ResponseWriter, r *http.Request) {
 	profile := GetProfile(r)
 	var gallery Gallery
 
+	log.Printf("hello")
+
 	err := gallery.Get(profile)
 
 	if err == nil {
@@ -401,14 +402,14 @@ func GetGalleryHandler(w http.ResponseWriter, r *http.Request) {
 
 func GalleryArtsHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-		case http.MethodGet:
-			GetGalleryAllArtHandler(w, r)
-		case http.MethodPost:
-			AddGalleryArtHandler(w, r)
-		case http.MethodOptions:
-			return
-		default:
-			http.Error(w, "Method not permitted", http.StatusBadRequest)
+	case http.MethodGet:
+		GetGalleryAllArtHandler(w, r)
+	case http.MethodPost:
+		AddGalleryArtHandler(w, r)
+	case http.MethodOptions:
+		return
+	default:
+		http.Error(w, "Method not permitted", http.StatusBadRequest)
 	}
 }
 
@@ -459,16 +460,16 @@ func AddGalleryArtHandler(w http.ResponseWriter, r *http.Request) {
 
 func GalleryArtHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-		case http.MethodGet:
-			GetGalleryArtHandler(w, r)
-		case http.MethodPut:
-			UpdateGalleryArtHandler(w, r)
-		case http.MethodDelete:
-			DeleteGalleryArtHandler(w, r)
-		case http.MethodOptions:
-			return
-		default:
-			http.Error(w, "Method not permitted", http.StatusBadRequest)
+	case http.MethodGet:
+		GetGalleryArtHandler(w, r)
+	case http.MethodPut:
+		UpdateGalleryArtHandler(w, r)
+	case http.MethodDelete:
+		DeleteGalleryArtHandler(w, r)
+	case http.MethodOptions:
+		return
+	default:
+		http.Error(w, "Method not permitted", http.StatusBadRequest)
 	}
 }
 
@@ -576,15 +577,15 @@ func HomeLinkHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type OctoProfile struct {
-	Login			string		`json:"login"`
-	Name			string		`json:"name"`
-	Email			string		`json:"email"`
+	Login string `json:"login"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 type OctoClaims struct {
 	jwt.StandardClaims
 
-	Profile			OctoProfile	`json:"profile"`
+	Profile OctoProfile `json:"profile"`
 }
 
 func (claims OctoClaims) Valid() error {
@@ -604,7 +605,6 @@ func (claims OctoClaims) Valid() error {
 		vErr.Errors |= jwt.ValidationErrorIssuer
 	}
 
-
 	if vErr.Errors == 0 {
 		log.Printf("Validated all claims without errors.")
 		return nil
@@ -612,6 +612,7 @@ func (claims OctoClaims) Valid() error {
 
 	return vErr
 }
+
 type ProfileHeader int
 
 const (
@@ -647,7 +648,7 @@ func authnMiddleware(next http.Handler) http.Handler {
 				//if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				//	return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 				//}
-			
+
 				// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 				return []byte(configuration.Secret), nil
 			})
@@ -656,9 +657,8 @@ func authnMiddleware(next http.Handler) http.Handler {
 				log.Printf("AuthN: Invalid token %s", err)
 				http.Error(w, "Forbidden", http.StatusForbidden)
 				return
-			} 
-			
-			
+			}
+
 			if claims, ok := token.Claims.(*OctoClaims); ok && token.Valid {
 				log.Printf("AuthN: Received valid token %s", authz)
 
@@ -688,7 +688,7 @@ func main() {
 		fmt.Printf("Usage %s CONFIG_FILE\n", os.Args[0])
 		return
 	}
-	
+
 	c, err := LoadConfiguration(os.Args[1])
 	if err != nil {
 		panic(err)
@@ -705,7 +705,7 @@ func main() {
 	router.HandleFunc("/gallery/art", GalleryArtsHandler).Methods(http.MethodGet, http.MethodPost, http.MethodOptions)
 	router.HandleFunc("/gallery/art/{id}", GalleryArtHandler).Methods(http.MethodGet, http.MethodPut, http.MethodDelete, http.MethodOptions)
 
-	addr := fmt.Sprintf("%s:%d", configuration.Host, configuration.Port)
+	addr := fmt.Sprintf(":%d", configuration.Port)
 	log.Printf("Listening on %s", addr)
 	log.Fatal(http.ListenAndServe(addr, router))
 }

@@ -1,14 +1,21 @@
 services:
-  auth:
-    build:
-      dockerfile: ./docker/auth.Dockerfile
-    environment:
-      - BACKEND_HOST=auth
-    ports:
-      - "5000:5000"
+#  auth:
+#    build:
+#      dockerfile: ./docker/auth.Dockerfile
+#    environment:
+#      BACKEND_HOST: auth
+#      OIDC_CLIENT_ID: web
+#      OIDC_CLIENT_SECRET: secret
+#    ports:
+#      - "5000:5000"
   frontend:
     build:
       dockerfile: ./docker/frontend.Dockerfile
+    environment:
+      OIDC_CLIENT_ID: web
+      OIDC_ISSUER: http://localhost:9998/
+      OIDC_RESPONSE_TYPE: code
+      OIDC_SCOPE: openid profile
     ports:
       - "8080:8080"
   gallery:

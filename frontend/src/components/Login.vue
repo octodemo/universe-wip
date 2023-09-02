@@ -7,17 +7,10 @@
     <div class="uk-flex uk-flex-center uk-flex-middle uk-text-center">
       <div class="uk-card uk-card-default">
         <div class="uk-card-media-top">
-          <img
-            src="@/assets/images/gh-mark.png"
-            class=""
-            width="100px"
-            height="100px"
-          />
+          <img src="@/assets/images/gh-mark.png" class="" width="100px" height="100px" />
         </div>
         <div class="uk-card-body">
-          <a href="#" @click="login" class="uk-button uk-button-text"
-            >Login with GitHub</a
-          >
+          <a href="#" @click="login" class="uk-button uk-button-text">Login with GitHub</a>
         </div>
       </div>
     </div>
@@ -39,17 +32,24 @@ export default {
   },
   methods: {
     login() {
-      const returnUrl = this.$route.query.returnUrl || "/";
+      // const returnUrl = this.$route.query.returnUrl || "/";
 
-      this.$store.dispatch("nonce").then(nonce => {
-        const state = btoa(`${nonce}:${returnUrl}`)
-        window.location =
-        `https://github.com/login/oauth/authorize?client_id=aad2f5434c1efdb25ce6&return_url=${window.location.origin}/login/callback&state=${state}`
-      })
+      // this.$store.dispatch("nonce").then(nonce => {
+      //   const state = btoa(`${nonce}:${returnUrl}`);
+      //   window.location =
+      //     `https://github.com/login/oauth/authorize?client_id=aad2f5434c1efdb25ce6&return_url=${window.location.origin}/login/callback&state=${state}`;
+      // });
+
+      const client_id = "web";
+      const issuer = "http://localhost:9998/";
+      const redirect_uri = `${window.location.origin}/login/callback`;
+      const response_type = "code";
+      const scope = "openid profile";
+      const url = encodeURI(`${issuer}auth?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}`);
+      window.location = url;
     },
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -14,19 +14,23 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+CLIENT_ID = os.getenv("OIDC_CLIENT_ID")
+CLIENT_SECRET = os.getenv("OIDC_CLIENT_SECRET")
 
 def get_access_token(code):
     app.logger.debug('Requesting access token')
-    r = requests.post('https://github.com/login/oauth/access_token', json={
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
+    # r = requests.post('https://github.com/login/oauth/access_token', json={
+    r = requests.post('http://localhost:9998/oauth/token', data={
+        # 'client_id': CLIENT_ID,
+        # 'client_secret': CLIENT_SECRET,
         'code': code,
-        'redirect_uri': 'http://localhost:5000/login/callback',
-        'state': 'NotSoRandom'
+        'grant_type': 'authorization_code',
+        'redirect_uri': 'http://localhost:8080/login/callback',
+        # 'state': 'NotSoRandom'
     }, headers={
-        'Accept': 'application/json'
+        'Authorization': 'Basic d2ViOnNlY3JldA==',
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
     })
 
     app.logger.debug('Received response %s with status %d', r.json(), r.status_code)
@@ -35,12 +39,16 @@ def get_access_token(code):
     if 'error' in data:
         return (None, data['error_description'])
 
-    return ({'access_token': data['access_token'], 'scope': data['scope'], 'token_type': data['token_type']}, None)
+    # return ({'access_token': data['access_token'], 'scope': data['scope'], 'token_type': data['token_type']}, None)
+    return (data, None)
 
 def get_user_profile(access_token):
     app.logger.debug('Request user profile')
-    r = requests.get('https://api.github.com/user', headers={
-        'Accept': 'application/vnd.github.v3+json',
+    # r = requests.get('https://api.github.com/user', headers={
+    #     'Accept': 'application/vnd.github.v3+json',
+    #     'Authorization': f'Bearer {access_token}'
+    # })
+    r = requests.get('http://localhost:9998/userinfo', headers={
         'Authorization': f'Bearer {access_token}'
     })
 

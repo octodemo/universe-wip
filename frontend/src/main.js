@@ -71,7 +71,8 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    authenticate({ commit }, {code, state}) {
+    // authenticate({ commit }, {code, state}) {
+    authenticate({ commit }, {code}) {
       return new Promise((resolve, reject) => {
         Axios.get(`http://localhost:5000/authenticate/${code}`).then((response) => {
           if (response.data.token) {
@@ -80,8 +81,9 @@ const store = new Vuex.Store({
             commit('token', token )
             localStorage.setItem('token', token)
   
-            const [nonce, returnUrl] = atob(state).split(':', 2)
-            console.log("Received authentication state with nonce", nonce, "and return url", returnUrl)
+            // const [nonce, returnUrl] = atob(state).split(':', 2)
+            // console.log("Received authentication state with nonce", nonce, "and return url", returnUrl)
+            const returnUrl = "http://localhost:8080/gallery";
             resolve(returnUrl)
           } else {
             reject(response.data.error)
