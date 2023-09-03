@@ -1,16 +1,10 @@
-# syntax=docker/dockerfile:1.4
-FROM python:3.10-bullseye
+FROM golang:1.20
 
 WORKDIR /code
 
 COPY auth /code
+RUN go mod download
 
-RUN  apt-get update
+RUN go build -o server
 
-RUN apt-get install -y libcairo2-dev pkg-config python3-dev libgirepository1.0-dev
-
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip3 install -r requirements.txt
-
-ENTRYPOINT ["python3"]
-CMD ["app.py"]
+CMD ["./server"]

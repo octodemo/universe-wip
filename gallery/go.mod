@@ -1,6 +1,6 @@
 module github.com/gallery-service
 
-go 1.15
+go 1.20
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible

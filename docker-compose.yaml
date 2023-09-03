@@ -1,13 +1,19 @@
 services:
-#  auth:
-#    build:
-#      dockerfile: ./docker/auth.Dockerfile
-#    environment:
-#      BACKEND_HOST: auth
-#      OIDC_CLIENT_ID: web
-#      OIDC_CLIENT_SECRET: secret
-#    ports:
-#      - "5000:5000"
+  auth:
+    build:
+      dockerfile: ./docker/auth.Dockerfile
+    ports:
+      - "9998:9998"
+  auth-ext:
+    build:
+      dockerfile: ./docker/auth-ext.Dockerfile
+    environment:
+      BACKEND_HOST: auth-ext
+      OIDC_CLIENT_ID: web
+      OIDC_CLIENT_SECRET: secret
+      OIDC_ISSUER: http://auth:9998/
+    ports:
+      - "5000:5000"
   frontend:
     build:
       dockerfile: ./docker/frontend.Dockerfile
