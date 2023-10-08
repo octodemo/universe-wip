@@ -27,7 +27,7 @@ def get_access_token(code):
     r = requests.post(f'{OIDC_ISSUER}oauth/token', data={
         'code': code,
         'grant_type': 'authorization_code',
-        'redirect_uri': 'http://localhost:8080/login/callback',
+        'redirect_uri': 'http://localhost:5173/login/callback', #change back to 8080
     }, headers={
         'Authorization': f'Basic {credentials}',
         'Accept': 'application/json',

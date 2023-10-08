@@ -345,9 +345,9 @@ func (p ArtPiece) Delete(gallery Gallery) error {
 func GetProfile(r *http.Request) *OctoProfile {
 	profile := new(OctoProfile)
 
-	profile.Login = r.Header.Get(GitHubLoginHeader.String())
 	profile.Name = r.Header.Get(GitHubNameHeader.String())
 	profile.Email = r.Header.Get(GitHubEmailHeader.String())
+	profile.Login = profile.Email
 
 	return profile
 }
@@ -441,6 +441,17 @@ func AddGalleryArtHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+
+	if gallery.Title == "The Empty gallery" {
+		gallery.Title = "This gallery belongs to " + profile.Name
+		gallery.Description = "Mona loves your art!"
+		err := gallery.Update(profile)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
 	}
 
 	err = json.NewDecoder(r.Body).Decode(&art_piece)

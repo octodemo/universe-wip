@@ -150,6 +150,7 @@ func NativeClient(id string, redirectURIs ...string) *Client {
 			"http://localhost/auth/callback",
 			"http://localhost:8080/login/callback",
 			"http://localhost:5000/login/callback",
+			"http://localhost:5173/login/callback",
 			"custom://auth/callback",
 		}
 	}
@@ -179,6 +180,7 @@ func WebClient(id, secret string, redirectURIs ...string) *Client {
 			"http://localhost:5000/login/callback",
 			"http://localhost:9999/auth/callback",
 			"http://localhost:8080/login/callback",
+			"http://localhost:5173/login/callback",
 		}
 	}
 	return &Client{

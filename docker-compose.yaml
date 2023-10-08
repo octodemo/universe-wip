@@ -23,7 +23,7 @@ services:
       OIDC_RESPONSE_TYPE: code
       OIDC_SCOPE: openid profile
     ports:
-      - "8080:8080"
+      - "5173:80"
   gallery:
     build:
       dockerfile: ./docker/gallery.Dockerfile

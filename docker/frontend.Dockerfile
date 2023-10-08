@@ -1,4 +1,4 @@
-FROM docker.io/node:16.13.0-buster
+FROM docker.io/node:18.16.0-buster
 
 RUN npm install -g @vue/cli
 
