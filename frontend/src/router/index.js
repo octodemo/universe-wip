@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '../stores/store'
 
 import LoginView from '../views/LoginView.vue'
+import LogoutView from '../views/LogoutView.vue'
 import AuthorizationCallback from '../views/AuthorizationCallbackView.vue'
 import Gallery from '../views/GalleryView.vue'
 
@@ -22,8 +23,10 @@ import Gallery from '../views/GalleryView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/', redirect: '/login'},
     { path: '/login/callback', name: "AuthorizationCallback", component: AuthorizationCallback },
     { path: '/gallery', name: 'Gallery', component: Gallery, meta: { requiresAuth: true } },
+    { path: '/logout', name: 'Logout', component: LogoutView },
     //  {
     //    path: '/login/callback',
     //   name: 'home',

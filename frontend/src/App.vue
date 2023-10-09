@@ -1,6 +1,9 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import logo from "./assets/images/gh-mark.png";
+
+
+
 </script>
 
 <template>
@@ -11,9 +14,34 @@ import logo from "./assets/images/gh-mark.png";
         GitHub Mona Gallery
       </a>
     </div>
+    <template v-if="this.isLoggedIn">
+      <button type="button" @click="logout" class="btn btn-dark">Logout</button>
+    </template>
+
   </nav>
 
   <RouterView />
 </template>
 
 <style scoped></style>
+
+<script>
+
+export default {
+  name: "App",
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+    profile() {
+      return this.$store.getters.profile;
+    },
+  },
+  methods: {
+    logout() {
+      this.$router.push({ path: '/logout' });
+    },
+  },
+};
+
+</script>

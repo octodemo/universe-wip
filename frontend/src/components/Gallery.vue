@@ -62,6 +62,41 @@
             </div>
         </div>
 
+
+        <!--Edit Modal-->
+        <div class="modal fade" id="editImageModal" tabindex="-1" aria-labelledby="editImageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editImageModalLabel">Edit Artwork</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Title:</label>
+                                <input type="text" class="form-control" v-model="artForEdit.title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Description:</label>
+                                <textarea class="form-control" v-model="artForEdit.description"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" @click="putArtRequest(artForEdit)" class="btn btn-primary">Save
+                            Artwork</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
         <!--ViewImage Modal -->
         <div class="modal fade" id="viewImageModal" tabindex="-1" aria-labelledby="viewImageModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -85,7 +120,7 @@
 
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div v-for="art in  this.gallery?.art ">
+                        <div v-for=" art  in   this.gallery?.art  ">
                             <div class="col">
                                 <div class="card shadow-sm">
                                     <img class="bd-placeholder-img card-img-top" width="100%" v-bind:src="art.uri"
@@ -93,10 +128,22 @@
                                         focusable="false">
                                     <div class="card-body">
                                         <p class="card-text">{{ art.title }}</p>
+
+                                        <p v-if="art.description" class="card-text">{{ art.description }}</p>
+
+                                        <p v-else="art.description" class="card-text">Click Edit to describe this artwork to
+                                            Mona!</p>
+
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <button type="button" data-bs-toggle="modal" @click="viewArt(art)"
-                                                data-bs-target="#viewImageModal"
-                                                class="btn btn-sm btn-outline-secondary">View</button>
+                                            <div class="btn-group">
+                                                <button type="button" data-bs-toggle="modal" @click="viewArt(art)"
+                                                    data-bs-target="#viewImageModal"
+                                                    class="btn btn-sm btn-outline-secondary">View</button>
+                                                <button type="button" data-bs-toggle="modal" @click="editArt(art)"
+                                                    data-bs-target="#editImageModal"
+                                                    class="btn btn-sm btn-outline-secondary">Edit</button>
+
+                                            </div>
                                             <button type="button" @click="deleteImage(art.id)"
                                                 class="btn btn-sm btn-outline-danger">Delete</button>
                                         </div>
@@ -124,7 +171,10 @@ export default {
             availableImages: [],
             gallery: null,
             selectedArt: [],
-            artForZoom: null
+            artForZoom: null,
+            artForEdit: [],
+
+
         };
     },
     mounted() {
@@ -143,9 +193,27 @@ export default {
 
     },
     methods: {
+        putArtRequest(artItem) {
+            axios.put(
+                `http://localhost:8081/gallery/art/${artItem.id}`, artItem,
+                {
+                    headers: {
+                        "Content-Type": false
+                    }
+                }).then((response) => {
+                    console.log(response);
+                }).catch((e) => {
+                    console.log(e)
+                });
+            location.reload();
+        },
         viewArt(artItem) {
             this.artForZoom = artItem;
         },
+        editArt(artItem) {
+            this.artForEdit = artItem;
+        },
+
 
         reloadPage() {
             location.reload()
