@@ -234,8 +234,9 @@ export default {
     },
     methods: {
         putArtRequest(artItem) {
-
-       
+            
+            artItem.description.replace("'", "''");
+            artItem.title.replace("'", "''");
 
             axios.put(
                 `http://localhost:8081/gallery/art/${artItem.id}`, artItem,
