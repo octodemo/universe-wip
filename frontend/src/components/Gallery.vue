@@ -5,7 +5,13 @@
             <section class="py-5 text-center container">
                 <div class="row py-lg-5">
                     <div class="col-lg-6 col-md-8 mx-auto">
+
+
                         <h1 class="fw-light">The Mona Album</h1>
+                        <div v-html="message"></div>
+
+
+
                         <p class="lead text-muted">
 
                             <template v-if="gallery">
@@ -18,11 +24,44 @@
                             <a href="#" data-bs-toggle="modal" data-bs-target="#selectImageModal" @click="getImages"
                                 class="btn btn-primary my-2">Add Image</a>
 
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#editGalleryModal"
+                                class="btn btn-primary my-2">Edit Gallery</a>
+
                         </p>
                     </div>
                 </div>
             </section>
         </main>
+
+
+
+        <!--Edit Gallery-->
+        <div class="modal fade" id="editGalleryModal" tabindex="-1" aria-labelledby="editGalleryModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editGalleryModalLabel">Edit Artwork</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Title:</label>
+                                <input type="text" class="form-control" v-model="message">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <!-- Modal -->
         <div class="modal fade" id="selectImageModal" tabindex="-1" aria-labelledby="selectImageModalLabel"
@@ -173,7 +212,7 @@ export default {
             selectedArt: [],
             artForZoom: null,
             artForEdit: [],
-
+            message: null,
 
         };
     },
@@ -189,11 +228,16 @@ export default {
             })
         }).catch((e) => {
             console.log("Failed to refresh gallery with error:", e)
+            console.log(err.stack);
         })
 
     },
     methods: {
         putArtRequest(artItem) {
+
+            artItem.description.replace("'", "''");
+            artItem.title.replace("'", "''");
+
             axios.put(
                 `http://localhost:8081/gallery/art/${artItem.id}`, artItem,
                 {
@@ -204,6 +248,7 @@ export default {
                     console.log(response);
                 }).catch((e) => {
                     console.log(e)
+                    console.log(err.stack);
                 });
             location.reload();
         },
