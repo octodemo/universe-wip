@@ -8,8 +8,7 @@
 
 
                         <h1 class="fw-light">The Mona Album</h1>
-                        <div v-html="message"></div>
-
+                        <span v-html="message"></span>
 
 
                         <p class="lead text-muted">
@@ -23,9 +22,6 @@
                         <p>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#selectImageModal" @click="getImages"
                                 class="btn btn-primary my-2">Add Image</a>
-
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#editGalleryModal"
-                                class="btn btn-primary my-2">Edit Gallery</a>
 
                         </p>
                     </div>
@@ -168,7 +164,7 @@
                                     <div class="card-body">
                                         <p class="card-text">{{ art.title }}</p>
 
-                                        <p v-if="art.description" class="card-text">{{ art.description }}</p>
+                                        <p v-if="art.description" class="card-text" v-html="art.description"></p>
 
                                         <p v-else="art.description" class="card-text">Click Edit to describe this artwork to
                                             Mona!</p>
@@ -212,10 +208,11 @@ export default {
             selectedArt: [],
             artForZoom: null,
             artForEdit: [],
+            color: "blue",
             message: null,
-
         };
     },
+
     mounted() {
         axios.get("http://localhost:8081/gallery").then((response) => {
             console.log("Refreshed gallery with:", response.data)
@@ -233,6 +230,7 @@ export default {
 
     },
     methods: {
+
         putArtRequest(artItem) {
 
        

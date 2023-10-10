@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../stores/store'
-
+import NotFoundView from '../views/NotFoundView.vue'
 import LoginView from '../views/LoginView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import AuthorizationCallback from '../views/AuthorizationCallbackView.vue'
@@ -45,6 +45,9 @@ const router = createRouter({
       name: 'Login',
       component: LoginView
     },
+    {
+      path:  '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView
+    }
  
 
   ]
