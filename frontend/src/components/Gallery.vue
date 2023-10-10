@@ -248,7 +248,7 @@ export default {
                     console.log(response);
                 }).catch((e) => {
                     console.log(e)
-                    console.log(err.stack);
+                    console.log(e.stack)
                 });
             location.reload();
         },
