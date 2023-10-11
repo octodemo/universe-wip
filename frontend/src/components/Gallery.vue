@@ -232,7 +232,8 @@ export default {
     methods: {
 
         putArtRequest(artItem) {
-
+            artItem.description.replace("'", "''");
+            artItem.title.replace("'", "''");
        
 
             axios.put(
