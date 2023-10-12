@@ -304,13 +304,16 @@ func (p *ArtPiece) Create(gallery Gallery) error {
 func (p ArtPiece) Update(gallery Gallery) error {
 	db := GetDb()
 
-	stmt, err := db.Prepare("UPDATE art_piece SET title = ?, description = ?, stars = ?, uri = ? WHERE id = ? and gallery_id = ?")
+	query := fmt.Sprintf("UPDATE art_piece SET title = '%s', description = '%s', stars = '%d', uri = '%s' WHERE id = %d and gallery_id = '%d'", p.Title, p.Description, p.Stars, p.Uri, p.ID, gallery.ID)
+	stmt, err := db.Prepare(query)
+
+	//	stmt, err := db.Prepare("UPDATE art_piece SET title = ?, description = ?, stars = ?, uri = ? WHERE id = ? and gallery_id = ?")
 	if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(p.Title, p.Description, p.Stars, p.Uri, p.ID, gallery.ID)
+	r, err := stmt.Exec()
 	if err != nil {
 		return err
 	}
