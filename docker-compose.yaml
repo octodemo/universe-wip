@@ -1,0 +1,31 @@
+services:
+  auth:
+    build:
+      dockerfile: ./docker/auth.Dockerfile
+    ports:
+      - "9998:9998"
+  auth-ext:
+    build:
+      dockerfile: ./docker/auth-ext.Dockerfile
+    environment:
+      BACKEND_HOST: auth-ext
+      OIDC_CLIENT_ID: web
+      OIDC_CLIENT_SECRET: secret
+      OIDC_ISSUER: http://auth:9998/
+    ports:
+      - "5000:5000"
+  # frontend:
+  #   build:
+  #     dockerfile: ./docker/frontend.Dockerfile
+  #   environment:
+  #     OIDC_CLIENT_ID: web
+  #     OIDC_ISSUER: http://localhost:9998/
+  #     OIDC_RESPONSE_TYPE: code
+  #     OIDC_SCOPE: openid profile
+  #   ports:
+  #     - "5173:80"
+  # gallery:
+  #   build:
+  #     dockerfile: ./docker/gallery.Dockerfile
+  #   ports:
+  #     - "8081:8081"
