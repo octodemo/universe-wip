@@ -50,7 +50,7 @@ In this exercise we will attempt to remediate the SQL Injection vulnerability th
 
 Input sanitization is a fundamental security practice to prevent SQL injection attacks.
 
-1. Create a branch called `sql-injection-fix`. If using codespaces you can run the command `gith checkout -b sql-injection-fix`
+1. Create a branch called `sql-injection-fix`. If using codespaces you can run the command `git checkout -b sql-injection-fix`
 
 2. Add the following sanitization function on line 201 of `frontend/components/Gallery.vue`
 
@@ -69,6 +69,11 @@ function sanitizeInput(input) {
     input = input.replace(";", "");
     return input;
 }
+```
+Add the following to line 250 of `/frontend/components/Gallery.vue`
+```
+    artItem.description = sanitizeInput(artItem.description)
+    artItem.title = sanitizeInput(artItem.title)
 ```
 
 3. Commit and push the code to the `sanitize-input` branch. If running codespaces, you can runn the following git commands:
