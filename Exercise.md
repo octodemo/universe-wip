@@ -50,7 +50,7 @@ In this exercise we will attempt to remediate the SQL Injection vulnerability th
 
 Input sanitization is a fundamental security practice to prevent SQL injection attacks.
 
-1. Create a branch called `sanitize-input`. If using codespaces you can run the command `gith checkout -b sanitize-input`
+1. Create a branch called `sql-injection-fix`. If using codespaces you can run the command `gith checkout -b sql-injection-fix`
 
 2. Add the following sanitization function on line 201 of `frontend/components/Gallery.vue`
 
@@ -94,9 +94,24 @@ Commit the fix suggested by the autofix feature.
 #### Copilot
 
 Our sanitize function only applies to the UI. We will still be vulnerable if we expose the Update method as an API or other medium. 
-Let's ask Copilot how we could fix this sanization problem 
+Let's ask Copilot how we could fix this sanization problem.
 
-![image](https://github.com/octodemo/universe-wip/assets/68650974/eb9506de-1785-4140-b497-18f91da313ae)
+In codespaces use the sarif viewer to navigate to the SQL Injection vulnerability located in gallery/main.go on line 308.
+Note if the Sarif Viewer is not loading the correct SARIF you can use the one provided in the universe-utils/go.sarif
+
+1. Select the `Fix using Copilot Option'
+![image](https://github.com/octodemo/universe-wip/assets/68650974/f0986539-e074-4403-b356-2fe49bd07ac4)
+
+Copilot should propose the following fix. Click Accept
+
+![image](https://github.com/octodemo/universe-wip/assets/68650974/ad41524c-409d-44f0-9950-bc4e5446e2fa)
+
+
+2. Commit and push in your code. Wait until CodeQL has completed analysis and merge to Main
+
+### XSS Vulnerability 
+
+
 
 
 
