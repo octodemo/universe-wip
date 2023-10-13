@@ -89,6 +89,15 @@ You should see the following on your pull request.
 
 Our function only replaced the first occurance of the string. Autofix has suggested a fix to replace the string with a regular expression and uses the `g` flag to ensure all occurrences are replaced.
 
+Commit the fix suggested by the autofix feature. 
+
+#### Copilot
+
+Our sanitize function only applies to the UI. We will still be vulnerable if we expose the Update method as an API or other medium. 
+Let's ask Copilot how we could fix this sanization problem 
+
+![image](https://github.com/octodemo/universe-wip/assets/68650974/eb9506de-1785-4140-b497-18f91da313ae)
+
 
 
 
