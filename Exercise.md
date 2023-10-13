@@ -1,5 +1,32 @@
+<details>
+<summary>Lab 1 : Get clean code using GitHub Copilot</summary>
 
-### _**Lab 1**_
+In this exercise we will use GitHub Copilot to give us give us code suggestions for a Delete record usecase. The functionality we have to implement is, ask Copilot to create a function which deletes an art piece from the `gallery` table based on the `title` name and `gallery id`
+
+1. Open the file `main.go` in the Codespace ide under the `gallery` folder in root
+2. At the end of the `Update` function you can enter the below prompt to ask GitHub Copilot for the Go code to delte items from gallery table
+3. If you see the code recommendation from GitHub Copilot, it has recommended an SQL operation using parameterized queries instead of user input appended queries
+4. This demonstrates how GitHub Copilot filters out security vulnerabilities in code recommended. [Further reading](https://github.blog/2023-02-14-github-copilot-now-has-a-better-ai-model-and-new-capabilities/#filtering-out-security-vulnerabilities-with-a-new-ai-system)
+
+
+`//write a function that deletes an art piece from the gallery table based on the title name and gallery id`
+
+```
+/ write a function that deletes a record from the gallery table based on the gallery id and title name
+func (g Gallery) DeleteGallery(title string) error {
+	db := GetDb()
+	stmt, err := db.Prepare("DELETE FROM gallery WHERE title = ? and id = ?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+}
+
+```
+</details>
+
+<details>
+    <summary>Lab 2 : Use GitHub Copilot to generate regular expressions for custom secret patterns</summary>
 
 #### Enabling secret scanning
 Secret scanning can be enabled in the settings of an organization or a repository. If Advanced Security is not enabled yet, then enable that first (same settings screen).
@@ -39,8 +66,11 @@ Copilot will respond back with a regular expression pattern as shown below in th
 
 ![image](https://github.com/Ent-Org/mona-gallery/assets/79184790/c4ba9148-facb-44ad-92f5-8f9a854a56e9)
 
+</details>
 
-### _**Lab 2**_
+<details>
+    
+<summary>Lab 3: Use GitHub Copilot and AI to fix vulnerabilities in your code</summary>
 
 #### Sanitize Input 
 
@@ -116,7 +146,7 @@ Copilot should propose the following fix. Click Accept
 
 ### XSS Vulnerability 
 
-
+</details>
 
 
 
