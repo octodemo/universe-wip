@@ -38,3 +38,57 @@ Copilot will respond back with a regular expression pattern as shown below in th
 11. Once the dry run in over, click on `Publish pattern`. With this step completed, you can navigate to `Security` section in the repository and you can see that a new secret has been identified by GitHub Secret Scanning and has been flagged as a vulnerability
 
 ![image](https://github.com/Ent-Org/mona-gallery/assets/79184790/c4ba9148-facb-44ad-92f5-8f9a854a56e9)
+
+
+### _**Lab 2**_
+
+#### Sanitize Input 
+
+In this exercise we will attempt to remediate the SQL Injection vulnerability that exists in `main.go` on line 308. 
+
+![image](https://github.com/octodemo/universe-wip/assets/68650974/c88eccf2-224d-4de9-a31c-3d555db65f67)
+
+Input sanitization is a fundamental security practice to prevent SQL injection attacks.
+
+1. Create a branch called `sanitize-input`. If using codespaces you can run the command `gith checkout -b sanitize-input`
+
+2. Add the following sanitization function on line 201 of `frontend/components/Gallery.vue`
+
+```js
+function sanitizeInput(input) {
+    if (input == null) {
+        return "";
+    }
+    // Replace all occurrences of apostrophe with two consecutive apostrophes
+    input = input.replace("'", "''");
+    // Remove all multi-line or single-line comments
+    input = input.replace(/\/\*[\s\S]*?\*\/|\/\/.*/, "");
+    //Remove all SQL comments
+    input = input.replace("--", " ")
+    // Remove all inline semicolons
+    input = input.replace(";", "");
+    return input;
+}
+```
+
+3. Commit and push the code to the `sanitize-input` branch. If running codespaces, you can runn the following git commands:
+```bash
+git add .
+git commit -m "Added sanitization method to Gallery.vue"
+git push --set-upstream origin sanitiza-input
+```
+
+4. Raise a Pull Request to the `main` branch and wait for CodeQL to complete analysis on the pull request
+
+
+#### Autofix Feature
+
+You should see the following on your pull request. 
+
+![image](https://github.com/octodemo/universe-wip/assets/68650974/906ed843-8b36-4397-b972-f5cef437a4c6)
+
+Our function only replaced the first occurance of the string. Autofix has suggested a fix to replace the string with a regular expression and uses the `g` flag to ensure all occurrences are replaced.
+
+
+
+
