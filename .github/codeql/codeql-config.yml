@@ -1,4 +1,4 @@
-Name: "CodeQL Configuration"
+name: "CodeQL Configuration"
 
 disable-default-queries: false
 
