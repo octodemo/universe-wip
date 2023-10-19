@@ -1,6 +1,4 @@
-queries:
+name: "CodeQL config"
+queries: 
+  - name: Run custom queries
     uses: ./queries/vue-xss.ql
-
-query-filters:
-- exclude:
-    id: js/xss
