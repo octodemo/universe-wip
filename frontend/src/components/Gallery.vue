@@ -198,6 +198,21 @@
 <script>
 import axios from 'axios';
 
+function sanitizeInput(input) {
+    if (input == null) {
+        return "";
+    }
+    // Replace all occurrences of apostrophe with two consecutive apostrophes
+    input = input.replace("'", "''");
+    // Remove all multi-line or single-line comments
+    input = input.replace(/\/\*[\s\S]*?\*\/|\/\/.*/, "");
+    //Remove all SQL comments
+    input = input.replace("--", " ")
+    // Remove all inline semicolons
+    input = input.replace(";", "");
+    return input;
+}
+
 export default {
     name: "Gallery",
 
@@ -232,8 +247,8 @@ export default {
     methods: {
 
         putArtRequest(artItem) {
-
-       
+            artItem.description = sanitizeInput(artItem.description)
+            artItem.title = sanitizeInput(artItem.title)
 
             axios.put(
                 `http://localhost:8081/gallery/art/${artItem.id}`, artItem,
