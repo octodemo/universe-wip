@@ -3,7 +3,8 @@ name: "CodeQL Configuration"
 disable-default-queries: false
 
 queries:
-   -uses: ./queries/vue-xss.ql
+  - name: Use an in-repository QL pack (run queries in the my-queries directory)
+    uses: ./queries/vue-xss.ql
 
 query-filters:
   - exclude:
