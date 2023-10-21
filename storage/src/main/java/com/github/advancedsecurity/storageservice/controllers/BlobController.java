@@ -1,13 +1,15 @@
 package com.github.advancedsecurity.storageservice.controllers;
 
 import java.util.UUID;
-import java.util.Arrays;
+import java.util.List;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.ByteArrayInputStream;
+
+import io.minio.GetObjectArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+import io.minio.StatObjectArgs;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,83 +17,89 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.WritableResource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.github.advancedsecurity.storageservice.security.JwtAuthenticationToken;
+import com.github.advancedsecurity.storageservice.config.MinioConfig;
+// import com.github.advancedsecurity.storageservice.security.JwtAuthenticationToken;
 import com.github.advancedsecurity.storageservice.models.Blob;
 import com.github.advancedsecurity.storageservice.models.Profile;
 
-@RestController
 @CrossOrigin
+@RestController
+@RequiredArgsConstructor
 public class BlobController {
-    @Autowired
-    private ResourceLoader resourceLoader;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+    private final MinioClient minio;
 
     @Value("${blob.allowed-content-types}")
-    private String[] allowedContentTypes;
+    private List<String> allowedContentTypes;
 
-    private Blob deserializeBlob(InputStream inputStream) throws IOException, ClassNotFoundException{
-        ObjectInputStream in = new ObjectInputStream(inputStream);
-        Blob b = (Blob)in.readObject();
-        in.close();
-        return b;
-    }
+    @Value("${minio.put-object-part-size}")
+    private long putObjectPartSize;
 
     @GetMapping("/blob/{id}")
-    public Blob get(@PathVariable UUID id, JwtAuthenticationToken token) {
-        Profile profile = (Profile)token.getPrincipal();
+    // public Blob get(@PathVariable UUID id, JwtAuthenticationToken token) {
+    public Blob get(@PathVariable UUID id) {
+        // var profile = (Profile)token.getPrincipal();
         try {
-            Blob blob = null;
-            Resource resource = this.resourceLoader.getResource(String.format("s3://%s/%s/%s", bucket, profile.name, id.toString()));
-            InputStream inputStream = resource.getInputStream();
-            blob = deserializeBlob(inputStream);
-            inputStream.close();
-            return blob;
-        } catch (IOException i) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve blob!");
-        } catch (ClassNotFoundException c) {
+            // var path = String.format("%s/%s", profile.name, id.toString());
+            var path = String.format("%s", id);
+
+            var stat = minio.statObject(
+                StatObjectArgs
+                    .builder()
+                    .bucket(MinioConfig.DEFAULT_BUCKET_NAME)
+                    .object(path)
+                    .build()
+            );
+
+            var is = minio.getObject(
+                GetObjectArgs
+                    .builder()
+                    .bucket(MinioConfig.DEFAULT_BUCKET_NAME)
+                    .object(path)
+                    .build()
+            );
+            
+            return new Blob(
+                stat.contentType(), 
+                is.readAllBytes()
+            );
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve blob!");
         }
     }
 
     @PostMapping("/blob")
-    public UUID post(@RequestParam MultipartFile file, @RequestParam(defaultValue="false") boolean isBlob, JwtAuthenticationToken token) {
-        Profile profile = (Profile)token.getPrincipal();
+    // public UUID post(@RequestParam MultipartFile file, @RequestParam(defaultValue="false") boolean isBlob, JwtAuthenticationToken token) {
+    public UUID post(@RequestParam("file") MultipartFile file) {
+        // var profile = (Profile)token.getPrincipal();
         try {
-            UUID id = UUID.randomUUID();
-            Blob blob = null;
-            if (isBlob) {
-                blob = deserializeBlob(new ByteArrayInputStream(file.getBytes()));
-            } else {
-                blob = new Blob(file.getContentType(), file.getBytes());
-            }
+            var id = UUID.randomUUID();
 
-            if(!Arrays.asList(this.allowedContentTypes).contains(blob.getMimeType())) {
+            if(!allowedContentTypes.contains(file.getContentType())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Disallowed content type");
             }
-            
-            Resource resource = this.resourceLoader.getResource(String.format("s3://%s/%s/%s", bucket, profile.name, id.toString()));
-            WritableResource writableResource = (WritableResource) resource;
-            OutputStream outputStream = writableResource.getOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(outputStream);
-            out.writeObject(blob);
-            out.close();
-            outputStream.close();
+
+            // var path = String.format("%s/%s", profile.name, id.toString());
+            var path = String.format("%s", id);
+
+            minio.putObject(
+                PutObjectArgs
+                    .builder()
+                    .bucket(MinioConfig.DEFAULT_BUCKET_NAME)
+                    .contentType(file.getContentType())
+                    .object(path)
+                    .stream(file.getInputStream(), file.getSize(), putObjectPartSize)
+                    .build()
+            );
+
             return id;
-        } catch (IOException i) {
+        } catch (Exception e) {
            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to store blob!");
-        } catch (ClassNotFoundException c) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve blob!");
         }
     }
 }
