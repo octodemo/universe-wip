@@ -144,7 +144,16 @@ Copilot should propose the following fix. Click Accept
 
 2. Commit and push in your code. Wait until CodeQL has completed analysis and merge to Main
 
-### XSS Vulnerability 
+### XSS Vulnerability - Bonus Questions
+
+1. There is a custom codeql query written specifically for finding vue related xss vulnerabilities specific to this codebase. Use Copilot chat to better understand this query? Hint: Context is key. Make sure you provide copilot with as much information as possible.
+
+Answer:
+
+![image](https://github.com/octodemo/universe-wip/assets/68650974/ef3890a9-30b4-41f0-b2a3-ff725b40d95c)
+
+![image](https://github.com/octodemo/universe-wip/assets/68650974/087a1366-71c5-4f0c-9507-74977890bbd4)
+   
 
 </details>
 
