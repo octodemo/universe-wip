@@ -83,7 +83,7 @@ func InitializeDb() {
 			END`,
 		`CREATE TABLE IF NOT EXISTS 'art_piece' 
 			(id INTEGER PRIMARY KEY AUTOINCREMENT, gallery_id INTEGER, uri TEXT, title TEXT,
-				description TEXT, stars INTEGER CHECK (stars BETWEEN 0 AND 3) DEFAULT 0, created_at DATETIME, updated_at DATETIME,
+				description TEXT, is_file_upload BOOL DEFAULT 0,  stars INTEGER CHECK (stars BETWEEN 0 AND 3) DEFAULT 0, created_at DATETIME, updated_at DATETIME,
 				FOREIGN KEY(gallery_id) REFERENCES gallery(id) ON DELETE CASCADE);`,
 		`CREATE TRIGGER IF NOT EXISTS 'art_piece_after_insert' 
 		AFTER INSERT ON 'art_piece' 
@@ -218,7 +218,7 @@ func (g Gallery) Update(profile *OctoProfile) error {
 func (g Gallery) GetArtPiece(id int64) (*ArtPiece, error) {
 	db := GetDb()
 
-	stmt, err := db.Prepare(`SELECT id, title, description, stars, uri FROM art_piece WHERE gallery_id = ? AND id = ?`)
+	stmt, err := db.Prepare(`SELECT id, title, description, stars, uri, is_file_upload FROM art_piece WHERE gallery_id = ? AND id = ?`)
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func (g Gallery) GetArtPiece(id int64) (*ArtPiece, error) {
 
 	if rs.Next() {
 		art_piece := &ArtPiece{}
-		rs.Scan(&art_piece.ID, &art_piece.Title, &art_piece.Description, &art_piece.Stars, &art_piece.Uri)
+		rs.Scan(&art_piece.ID, &art_piece.Title, &art_piece.Description, &art_piece.Stars, &art_piece.Uri, &art_piece.IsFileUpload)
 
 		return art_piece, nil
 	}
@@ -243,7 +243,7 @@ func (g Gallery) GetArtPiece(id int64) (*ArtPiece, error) {
 func (g Gallery) GetAllArtPieces() ([]ArtPiece, error) {
 	db := GetDb()
 
-	stmt, err := db.Prepare(`SELECT id, title, description, stars, uri FROM art_piece WHERE gallery_id = ?`)
+	stmt, err := db.Prepare(`SELECT id, title, description, stars, uri, is_file_upload FROM art_piece WHERE gallery_id = ?`)
 	if err != nil {
 		return nil, err
 	}
@@ -258,7 +258,7 @@ func (g Gallery) GetAllArtPieces() ([]ArtPiece, error) {
 
 	for rs.Next() {
 		art_piece := &ArtPiece{}
-		rs.Scan(&art_piece.ID, &art_piece.Title, &art_piece.Description, &art_piece.Stars, &art_piece.Uri)
+		rs.Scan(&art_piece.ID, &art_piece.Title, &art_piece.Description, &art_piece.Stars, &art_piece.Uri, &art_piece.IsFileUpload)
 
 		art_pieces = append(art_pieces, *art_piece)
 	}
@@ -267,23 +267,24 @@ func (g Gallery) GetAllArtPieces() ([]ArtPiece, error) {
 }
 
 type ArtPiece struct {
-	ID          int64  `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Stars       int    `json:"stars"`
-	Uri         string `json:"uri"`
+	ID           int64  `json:"id"`
+	Title        string `json:"title"`
+	Description  string `json:"description"`
+	Stars        int    `json:"stars"`
+	Uri          string `json:"uri"`
+	IsFileUpload bool   `json:"is_file_upload"`
 }
 
 func (p *ArtPiece) Create(gallery Gallery) error {
 	db := GetDb()
 
-	stmt, err := db.Prepare("INSERT INTO art_piece (title, description, uri, gallery_id) VALUES(?,?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO art_piece (title, description, uri, gallery_id, is_file_upload) VALUES(?,?,?,?,?)")
 	if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	r, err := stmt.Exec(p.Title, p.Description, p.Uri, gallery.ID)
+	r, err := stmt.Exec(p.Title, p.Description, p.Uri, gallery.ID, p.IsFileUpload)
 	if err != nil {
 		return err
 	}
