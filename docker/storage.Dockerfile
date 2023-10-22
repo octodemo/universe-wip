@@ -1,4 +1,4 @@
-# +==============================================================
+# +=====================================git =========================
 # | compile storage
 # +==============================================================
 
@@ -19,8 +19,7 @@ FROM azul/zulu-openjdk:21-jre
 WORKDIR /app
 
 COPY --from=build \
-     /code/target/storage.jar \
-     .
+    /code/target/storage.jar \
+    .
 
 ENTRYPOINT ["java", "-jar", "storage.jar"]
-

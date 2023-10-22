@@ -184,9 +184,7 @@
                         <div v-for=" art  in   this.gallery?.art  ">
                             <div class="col">
                                 <div class="card shadow-sm">
-                                    <template v-if="art.is_file_upload" class="bd-placeholder-img card-img-top" width="100%"
-                                        role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                                        focusable="false">
+                                    <template v-if="art.is_file_upload">
                                         <div v-html="art.uri"></div>
                                     </template>
                                     <template v-else="art.is_file_upload">
@@ -249,24 +247,32 @@ export default {
         };
     },
 
-    mounted() {
-        axios.get("http://localhost:8081/gallery").then((response) => {
+    async mounted() {
+        await axios.get("http://localhost:8081/gallery").then((response) => {
             console.log("Refreshed gallery with:", response.data)
             const gallery = response.data
-            const artResponse = null
+            this.gallery = gallery
 
-            axios.get("http://localhost:8081/gallery/art").then((response) => {
+        }).catch((e) => {
+            console.log("Failed to refresh gallery art with error:", e)
+        })
+        await axios.get("http://localhost:8081/gallery/art").then((response) => {
 
-                gallery.art = response.data
-                this.gallery = gallery
+            this.gallery.art = response.data
 
-
-            }).catch((e) => {
-                console.log("Failed to refresh gallery art with error:", e)
-            })
         }).catch((e) => {
             console.log("Failed to refresh gallery with error:", e)
             console.log(err.stack);
+        })
+        this.gallery.art.forEach(async art => {
+            if (art.is_file_upload) {
+                await axios.get(art.uri).then((response) => {
+                    const fileuri = "<img class='bd-placeholder-img card-img-top' width='100%' role='img' preserveAspectRatio='xMidYMid slice' focusable='false' src='data:" + response.data.mimeType + ";base64," + response.data.data + "'/>"
+                    art.uri = fileuri
+                }).catch((e) => {
+                    console.log(e)
+                })
+            }
         })
 
     },
@@ -286,35 +292,35 @@ export default {
                 }
             }).then((response) => {
                 console.log(response.data)
-                axios.get("http://localhost:8082/blob/" + response.data).then((response) => {
-                    const fileuri = "<img class='bd-placeholder-img card-img-top' width='100%' role='img' preserveAspectRatio='xMidYMid slice' focusable='false' src='data:" + response.data.mimeType + ";base64," + response.data.data + "'/>"
+                // axios.get("http://localhost:8082/blob/" + response.data).then((response) => {
+                // const fileuri = "<img class='bd-placeholder-img card-img-top' width='100%' role='img' preserveAspectRatio='xMidYMid slice' focusable='false' src='data:" + response.data.mimeType + ";base64," + response.data.data + "'/>"
 
 
-                    let art = {
-                        title: this.artFromFile.title,
-                        description: this.artFromFile.description,
-                        is_file_upload: true,
-                        uri: fileuri
+                let art = {
+                    title: this.artFromFile.title,
+                    description: this.artFromFile.description,
+                    is_file_upload: true,
+                    uri: "http://localhost:8082/blob/" + response.data
 
+                }
+                axios.post("http://localhost:8081/gallery/art", art, {
+                    headers: {
+                        "Content-Type": false
                     }
-                    axios.post("http://localhost:8081/gallery/art", art, {
-                        headers: {
-                            "Content-Type": false
-                        }
-                    }).then((response) => {
-                        console.log(response.data)
-                    }).catch((e) => {
-                        console.log(e)
-                    })
-                    location.reload();
+                }).then((response) => {
+                    console.log(response.data)
                 }).catch((e) => {
                     console.log(e)
                 })
-
-
+                location.reload();
             }).catch((e) => {
                 console.log(e)
             })
+
+
+            //   }).catch((e) => {
+            //      console.log(e)
+            //   })
 
         },
 
