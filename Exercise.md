@@ -157,6 +157,32 @@ Answer:
 
 </details>
 
+<details>
+<summary>Lab 4 : Fixing Injection Vulnerability with assistance from GitHub Copilot</summary>
 
+In this exercise we will use GitHub Copilot to suggest us a fix for the **Injection Vulnerability**. If you navigate to the **Security**
+section in the GitHub UI under the working repository, clicking on the **Code scanning** menu on the left hand side will list all the CodeQL vulnerabilities that were reported post the scan. We are particularly concerned about fixing the Injection vulnerability highlighted in the below screen shot.
+![image](https://github.com/octodemo/universe-wip/assets/79184790/e17d7db8-662b-4050-a502-dab50304596c)
+
+To fix this vulnerability we are going to ask GitHub Coliot Chat to provide us a fix for the code and see what recommendations that GitHub Copilot comes up with.
+
+1. Open the file `main.go` under `gallery` service
+2. Navigate to the `Update` method, where the Injection Vulnerability is reported
+3. This is where we are going to ask GitHub Copilot to provide us a fix for the code
+4. You can see the below screen shot where Copilot provided us with a recommendation and it is up to us to `Accept` or `Reject` the code suggestion
+
+![image](https://github.com/octodemo/universe-wip/assets/79184790/254b985b-1d92-481b-9008-d00ec8a9ecbf)
+
+4. Let's go ahead and accept the suggestion
+5. Next let's go ahead and commit the code back to GitHub repo and this should trigger another CodeQL scan
+
+![image](https://github.com/octodemo/universe-wip/assets/79184790/521fb3b7-0d9e-4609-8723-44442dad28b7)
+
+6. Once the CodeQL scan is completed, we can check that the Injection vulnerability for which GitHub Copoilot suggested a code fix, has been marked as `Fixed` in GitHub
+
+![image](https://github.com/octodemo/universe-wip/assets/79184790/7ceb75e3-4894-45cb-a59a-f2bcb712a07b)
+
+7. This concludes our exercise as to how we can use GitHub Copilot to get recommendations for fixing vulnerabilities in your code
+</details>
 
 
