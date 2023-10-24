@@ -65,7 +65,7 @@ You want to write a custom pattern to detect this.
 
 ### Exercise 2 - generic secret detection using AI
 
-This Universe we will also be releasing the **generic secret detection using AI** feature. Enabling this feature will use an AI model to detect additional secrets beyond the secrets detected with regular expression.
+At Universe 2023 we will also be releasing the **generic secret detection using AI** feature. Enabling this feature will use an AI model to detect additional secrets beyond the secrets detected with regular expression.
 
 1. Enable this feature by navigating to the `Settings` tab of the repository, click on the `Code security and analysis` section, and tick the checkbox `Use AI detection to find additional secrets` under secret scanning.
 
