@@ -1,7 +1,7 @@
 # Universe 2023 - Workshop Exercises
 
 Welcome to the workshop **Harnessing AI: Next Level Strategies for Advanced Security**!
-Below you will find a set of exercises to complete as a part of this workshop. There will be a set amount of time to complete each one.
+Below you will find the exercises to complete as a part of this workshop. There will be a set amount of time to complete each one.
 We will provide a walkthrough of the solution after each exercise.
 If you get stuck there are hints along the way. Additionaly you can access a GIF-based solution for each exercise and a video link is also available. 
 
