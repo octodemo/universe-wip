@@ -35,7 +35,7 @@ services:
     command: server --address :9000 --console-address :9001 --compat /data
     environment:
       MINIO_ROOT_USER: minio
-      MINIO_ROOT_PASSWORD: verysecure
+      MINIO_ROOT_PASSWORD: mona_value_abc124
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -50,7 +50,7 @@ services:
     environment:
       MINIO_URL: http://minio:9000
       MINIO_USERNAME: minio
-      MINIO_PASSWORD: verysecure
+      MINIO_PASSWORD: mona_value_abc124
     ports:
       - "8082:8082"
 volumes:
