@@ -181,7 +181,14 @@ Our sanitization function is limited to the user interface (UI). If we expose th
 
 </details>
 
+### Bonus XSS Exercise: Use Copilot to learn CodeQL
 
+There is a custom codeql query written specifically for finding vue related xss vulnerabilities specific to this codebase.This query can be found in the `queries` folder. Use **Copilot Chat** to better understand this query?
+
+    <details>
+      <summary> Hint </summary>
+      Hint: Context is key. To get the most accurate results make sure you provide copilot with as much information as possible. Add the necessary files for context
+    </details>
 
 
 
