@@ -85,5 +85,68 @@ At Universe 2023 we will also be releasing the **generic secret detection using 
 
     </details>
 
+## Lab 2 - Code Scanning AI
 
- 
+
+**Scenario**
+
+You have just joined a new team as a developer. To familiarize yourself with codebase, you've been tasked with remediating some code scanning vulnerabilities in the repository.
+
+You will be remediating an existing SQL Injection vulnerability in `main.go` on line 308.
+There are two tasks to remediate this vulnerability:
+1. sanitize input in the javascript (Exercise 1)
+2. fix the SQL prepare statement in the go code (Exercise 2)
+
+### Exercise 1 - AI generated autofix on javascript pull requests
+
+This Universe we will be releasing AI generated autofixes on the pull request. We will see this feature in action in this exercise. 
+
+Input sanitization is a fundamental security practice to prevent SQL injection attacks. Let's add a sanitize method in the javascript to help in mitigating against injection attack vectors.
+
+You can solve this exercise using either the codespaces or the UI. Codespaces is preferable as this is what a developer would use under normal circumstances. However, if codespaces is not loading for you please use the UI. We have provided solutions for both. 
+
+
+1. Create a branch called `sql-injection-fix` and push it to the remote repo.
+
+    <details>
+      <summary> Hint </summary>
+      Run the command:
+        
+      ```
+        $ git checkout -b sql-injection-fix
+        $ git push -u origin sql-injection-fix
+      ```
+     </details>
+
+    <details>
+      <summary> Solution </summary>  
+        
+      ![create-branch](https://github.com/octodemo/universe-wip/assets/68650974/4a162cb4-62d7-4ce6-9114-c5efefe60b2d)
+  
+    </details>
+     
+
+2. Add the following sanitization function on **line 233** of `frontend/components/Gallery.vue`
+
+    ```js
+    function sanitizeInput(input) {
+        if (input == null) {
+            return "";
+        }
+        //escape all occurances of apostrophe
+        input = input.replace("'", "''");
+    
+        return input;
+    }
+    ```
+
+3. Call the sanization function from the Update function by placing the following call on **line 341** of `/frontend/components/Gallery.vue`
+
+    ```js
+        artItem.description = sanitizeInput(artItem.description)
+        artItem.title = sanitizeInput(artItem.title)
+    ```
+
+4. Commit and push the code
+5. Raise a pull request
+      
