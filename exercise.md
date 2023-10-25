@@ -103,7 +103,7 @@ This Universe we will be releasing AI generated autofixes on the pull request. W
 
 Input sanitization is a fundamental security practice to prevent SQL injection attacks. Let's add a sanitize method in the javascript to help in mitigating against injection attack vectors.
 
-You can solve this exercise using either the codespaces or the UI. Codespaces is preferable as this is what a developer would use under normal circumstances. However, if codespaces is not loading for you please use the UI. We have provided solutions for both. 
+You can solve this exercise using either the codespaces or the UI. Codespaces is preferable as this is what a developer would use under normal circumstances. However, if codespaces is not loading for you please use the UI. 
 
 
 1. Create a branch called `sql-injection-fix` and push it to the remote repo.
@@ -185,12 +185,26 @@ Our sanitization function is limited to the user interface (UI). If we expose th
 
 There is a custom codeql query written specifically for finding vue related xss vulnerabilities specific to this codebase.This query can be found in the `queries` folder. Use **Copilot Chat** to better understand this query?
 
-    <details>
-      <summary> Hint </summary>
-      Hint: Context is key. To get the most accurate results make sure you provide copilot with as much information as possible. Add the necessary files for context
-    </details>
+<details>
+    <summary> Hint </summary>  
+        
+     Context is key. To get the most accurate results make sure you provide copilot with as much information as possible. Add the necessary files for context
+  
+</details>
 
+<details>
+   <summary> Example Solution One </summary>  
 
+   ![codeql-part-one](https://github.com/octodemo/universe-wip/assets/68650974/92f786bb-2b43-4726-a83e-a5f11d193d36)
+
+</details>
+
+<details>
+   <summary> Example Solution Two </summary>   
+    
+   ![codeql-part-two](https://github.com/octodemo/universe-wip/assets/68650974/695a1350-bd8e-4afe-8fc2-baca0b1206a9)
+   
+</details>
 
 
 
