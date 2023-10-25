@@ -140,7 +140,7 @@ You can solve this exercise using either the codespaces or the UI. Codespaces is
     }
     ```
 
-3. Call the sanization function from the Update function by placing the following call on **line 341** of `/frontend/components/Gallery.vue`
+3. Call the sanization function from the Update function by placing the following call on **line 339** of `/frontend/components/Gallery.vue`
 
     ```js
         artItem.description = sanitizeInput(artItem.description)
@@ -148,5 +148,13 @@ You can solve this exercise using either the codespaces or the UI. Codespaces is
     ```
 
 4. Commit and push the code
-5. Raise a pull request
+
+<details>
+   <summary> Solution for steps 2-4 </summary>  
+        
+    https://github.com/octodemo/universe-wip/assets/68650974/58f5272f-a67c-4379-a8af-dab3e8012928
+   
+</details>
+
+6. Raise a pull request
       
