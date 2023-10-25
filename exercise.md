@@ -151,10 +151,17 @@ You can solve this exercise using either the codespaces or the UI. Codespaces is
 
 <details>
    <summary> Solution for steps 2-4 </summary>  
-        
-    https://github.com/octodemo/universe-wip/assets/68650974/58f5272f-a67c-4379-a8af-dab3e8012928
+    
+   ![sanitization](https://github.com/octodemo/universe-wip/assets/68650974/a85a6690-607d-467e-b6bf-3566ad73d5b9)
    
 </details>
 
-6. Raise a pull request
+5. Raise a pull request to the `main` branch. Wait for the scans to complete and you should see a CodeQL javascript alert in your pull request. Oh no! There is a vulnerability in our vulnerability! Lucky we have autofix.
+
+**Autofix feature**
+
+The autofix feature suggests fixes for CodeQL alerts raised as a part of the pull request. At the moment, this only works for javascript. Our sanitize function only replaced the first occurance of the string. Autofix has suggested a fix to replace the string with a regular expression and uses the g flag to ensure all occurrences are replaced. You should be able to see an autofix suggestion as a part of the pull request. Commit the fix suggested by the autofix feature.
+
+![autofix](https://github.com/octodemo/universe-wip/assets/68650974/5a8e2c68-fc68-47b1-ae6d-c0814444530c)
+
       
