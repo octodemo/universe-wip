@@ -35,7 +35,7 @@ Please make sure that you have all the prerequisites in place before we start of
 
 ### Mona Gallery
 
-The Mona Gallery is a an delibrately vulnerable web application consisting of several prevalent vulnerability types, such as SQL injection, XSS, and deserialization, among others. The application's codebase is diverse, utilizing multiple technologies, including Go, Python, Javascript, and Java. A architecture diagram can be found below.  We will use this application's codebase for this workshop.
+The Mona Gallery is a delibrately vulnerable web application consisting of several prevalent vulnerability types, such as SQL injection, XSS, and deserialization, among others. The application's codebase is diverse, utilizing multiple technologies, including Go, Python, Javascript, and Java. A architecture diagram can be found below.  We will use this application's codebase for this workshop.
 
 
 ![mona-gallery](https://github.com/octodemo/universe-wip/assets/68650974/cb0bbf88-6d68-49e8-9129-fa3e487b2be9)
