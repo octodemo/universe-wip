@@ -26,7 +26,8 @@
 			"github.copilot",
 			"github.copilot-chat",
 			"github.copilot-labs",
-			"ms-sarifvscode.sarif-viewer"
+			"ms-sarifvscode.sarif-viewer",
+			"Vue.volar"
 			]
 		}
 	  }
