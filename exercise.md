@@ -164,4 +164,26 @@ The autofix feature suggests fixes for CodeQL alerts raised as a part of the pul
 
 ![autofix](https://github.com/octodemo/universe-wip/assets/68650974/5a8e2c68-fc68-47b1-ae6d-c0814444530c)
 
-      
+
+### Exercise 2 - remediating vulnerabilities with Copilot
+
+Our sanitization function is limited to the user interface (UI). If we expose the Update method through an API or another medium, we remain susceptible to vulnerabilities. Let's use Copilot to remediate the vulnerability. 
+
+1. In Codespaces, use the Sarif Viewer to navigate to the SQL Injection vulnerability located in `gallery/main.go` on **line 309**. Note if the Sarif Viewer is not loading the correct SARIF you can use the one provided in the `universe-utils/go.sarif`
+   
+2. Hover over the alert and select `Fix using Copilot`
+3. Copilot will propose a fix. Review proposed fix and click `Accept`
+
+<details>
+   <summary> Solution </summary>  
+
+![copilot-fix](https://github.com/octodemo/universe-wip/assets/68650974/8d8e7e54-ba87-444a-92fb-17f22f7a730a)
+
+</details>
+
+
+
+
+
+
+
