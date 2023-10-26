@@ -3,7 +3,7 @@
 Welcome to the workshop **Harnessing AI: Next Level Strategies for Advanced Security**!
 Below you will find the exercises to complete as a part of this workshop. There will be a set amount of time to complete each one.
 We will provide a walkthrough of the solution after each exercise.
-If you get stuck there are hints along the way. Additionaly you can access a GIF-based solution for each exercise and a video link is also available. 
+If you get stuck there are hints along the way. Additionaly you can access GIF-based solutions for each exercise.
 
 
 ## Lab 1 - Secret Scanning AI 
