@@ -84,9 +84,3 @@ jobs:
         category: "/language:${{matrix.language}}"
         output: sarif-results
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: my-artifact
-        path: sarif-results
-        retention-days: 5
