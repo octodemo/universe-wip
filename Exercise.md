@@ -201,7 +201,8 @@ Let's ask GitHub Copilot to explain us what an SQL injection is in our codebase
      <details>
     <summary> Solution </summary>
        
-    
+    ![learn-app-sec](https://github.com/octodemo/universe-wip/assets/79184790/e50d3566-5829-41eb-8782-f226bbfed061)
+
      </details>
 
 
