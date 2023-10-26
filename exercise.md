@@ -92,7 +92,7 @@ At Universe 2023 we will also be releasing the **generic secret detection using 
 
 You have just joined a new team as a developer. To familiarize yourself with codebase, you've been tasked with remediating some code scanning vulnerabilities in the repository.
 
-You will be remediating an existing SQL Injection vulnerability in `main.go` on line 308.
+You will be remediating an existing SQL Injection vulnerability in `main.go` on **line 308**.
 There are two tasks to remediate this vulnerability:
 1. sanitize input in the javascript (Exercise 1)
 2. fix the SQL prepare statement in the go code (Exercise 2)
