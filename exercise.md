@@ -194,15 +194,22 @@ There is a custom codeql query written specifically for finding vue related xss 
 
 <details>
    <summary> Example Solution One </summary>  
+    
+   Open the `queries/vue-xss.ql` file in the editor. In Copilot Chat ask: `/explain how vue-xss.ql works`
+   
 
-   ![codeql-part-one](https://github.com/octodemo/universe-wip/assets/68650974/92f786bb-2b43-4726-a83e-a5f11d193d36)
+   ![vscode-codeql-part-one](https://github.com/octodemo/universe-wip/assets/68650974/c86f17f3-4526-42f7-8769-943fa70a7ed4)
+
 
 </details>
 
 <details>
-   <summary> Example Solution Two </summary>   
+   <summary> Example Solution Two </summary>  
+
+   Open the `.github/codeql/codeql-config.yml` file in the editor. In Copilot Chat ask: `/explain how vue-xss.ql works`
     
-   ![codeql-part-two](https://github.com/octodemo/universe-wip/assets/68650974/695a1350-bd8e-4afe-8fc2-baca0b1206a9)
+   ![vscode-codeql-part-two](https://github.com/octodemo/universe-wip/assets/68650974/5af24638-8216-4622-9af5-7e7a1fb189cc)
+
    
 </details>
 
