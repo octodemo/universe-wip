@@ -185,4 +185,24 @@ To fix this vulnerability we are going to ask GitHub Coliot Chat to provide us a
 7. This concludes our exercise as to how we can use GitHub Copilot to get recommendations for fixing vulnerabilities in your code
 </details>
 
+## Lab 3 - Application Security Learning & Threat Modelling with GitHub Copilot  
+
+### Exercise 1 - Application Security Learning
+
+**Scenario**
+
+You are a part of the development team, and a relative novice to the world of Application Security. But, let's assume one of the application code that you have written has returned an Injection vulnerability after a CodeQL scan in the ci/cd pileline and your pull request has been blocked from merging. 
+You have been assigned a ticket to fix the vulnerability, but since you are a newbee and have very limited exposure to Application Security Vulnerabilities, we will see how GitHub Copilot can explain you about an Injection vulnerability with an in context learning and explanation about SQL Injection.
+
+Let's ask GitHub Copilot to explain us what an SQL injection is in our codebase
+
+1. Navigate to `Copilot Chat` icon in your VisuL Studio Code IDE (Codespace)
+2. Open the `main.go` file under `gallery` module. Navigate to line 200 which represents a Injection Vulnerability and ask GitHub Copilot Chat to explain you the vulnerability
+     <details>
+    <summary> Solution </summary>
+       
+    
+     </details>
+
+
 
