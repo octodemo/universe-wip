@@ -222,4 +222,26 @@ There is a custom codeql query written specifically for finding vue related xss 
   
 </details>
 
+## Lab 3 - Application Security Learning & Threat Modelling with GitHub Copilot  
 
+### Exercise 1 - Application Security Learning
+
+**Scenario**
+
+You are a part of the development team, and a relative novice to the world of Application Security. But, let's assume one of the application code that you have written has returned an Injection vulnerability after a CodeQL scan in the ci/cd pileline and your pull request has been blocked from merging. 
+You have been assigned a ticket to fix the vulnerability, but since you are a newbee and have very limited exposure to Application Security Vulnerabilities, we will see how GitHub Copilot can explain you about an Injection vulnerability with an in context learning and explanation about SQL Injection.
+
+Let's ask GitHub Copilot to explain us what an SQL injection is in our codebase
+
+1. Navigate to `Copilot Chat` icon in your VisuL Studio Code IDE (Codespace)
+2. Open the `main.go` file under `gallery` module. Navigate to line 200 which represents a Injection Vulnerability and ask GitHub Copilot Chat to explain you the vulnerability
+     <details>
+    <summary> Solution </summary>
+       
+    ![learn-app-sec](https://github.com/octodemo/universe-wip/assets/79184790/e50d3566-5829-41eb-8782-f226bbfed061)
+
+     </details>
+
+### Exercise 2 - Threatmodelling with GitHub Copilot
+
+**Scenario**
