@@ -23,7 +23,7 @@ In this exercise, we will generate a custom pattern using this feature.
 
 **Scenario**
 
-You are a part of the security team, and it has been brought to your attention that the minio password `mona_value_abc124` for the object store has been leaked in the code!
+You are a part of the security team, and it has been brought to your attention that the MinIO password `mona_value_abc124` for the object store has been leaked in the code!
 You want to write a custom pattern to detect this.
 
 1. Navigate to `Settings` tab of the repository, click on `Code security and analysis` section, and under `Custom Patterns` click on `New pattern`
@@ -90,7 +90,7 @@ At Universe 2023 we will also be releasing the **generic secret detection using 
 
 **Scenario**
 
-You have just joined a new team as a developer. To familiarize yourself with codebase, you've been tasked with remediating some code scanning vulnerabilities in the repository.
+You have just joined a new team as a developer. To familiarize yourself with the codebase, you've been tasked with remediating some code scanning vulnerabilities in the repository.
 
 You will be remediating an existing SQL Injection vulnerability in `main.go` on **line 308**.
 There are two tasks to remediate this vulnerability:
@@ -99,7 +99,7 @@ There are two tasks to remediate this vulnerability:
 
 ### Exercise 1 - AI generated autofix on javascript pull requests - 10 mins
 
-This Universe we will be releasing AI generated autofixes on the pull request. We will see this feature in action in this exercise. 
+This Universe we will be releasing AI generated autofixes on the pull request for Javascript CodeQL alerts. We will see this feature in action in this exercise. 
 
 Input sanitization is a fundamental security practice to prevent SQL injection attacks. Let's add a sanitize method in the javascript to help in mitigating against injection attack vectors.
 
@@ -160,12 +160,25 @@ You can solve this exercise using either the codespaces or the UI. Codespaces is
 
 **Autofix feature**
 
-The autofix feature suggests fixes for CodeQL alerts raised as a part of the pull request. At the moment, this only works for javascript. Our sanitize function only replaced the first occurance of the string. Autofix has suggested a fix to replace the string with a regular expression and uses the g flag to ensure all occurrences are replaced. You should be able to see an autofix suggestion as a part of the pull request. Commit the fix suggested by the autofix feature.
+The autofix feature suggests fixes for CodeQL alerts raised as a part of the pull request. At the moment, we only support javascript. Our sanitize function only replaced the first occurance of the string. Autofix has suggested a fix to replace the string with a regular expression and uses the g flag to ensure all occurrences are replaced. You should be able to see an autofix suggestion as a part of the pull request. Commit the fix suggested by the autofix feature.
 
 ![autofix](https://github.com/octodemo/universe-wip/assets/68650974/5a8e2c68-fc68-47b1-ae6d-c0814444530c)
 
 
-### Exercise 2 - remediating vulnerabilities with Copilot - 10 mins
+
+### Exercise 2 - learning with Copilot - 5 mins
+
+1. Navigate to `Copilot Chat` icon in your VisuL Studio Code IDE (Codespace)
+2. Open the `main.go` file under `gallery` module. Navigate to **line 309** which represents a injection vulnerability and ask GitHub Copilot Chat to explain the vulnerability
+     <details>
+    <summary> Solution </summary>
+       
+    ![learn-app-sec](https://github.com/octodemo/universe-wip/assets/79184790/e50d3566-5829-41eb-8782-f226bbfed061)
+
+     </details>
+
+
+### Exercise 3 - remediating vulnerabilities with Copilot - 10 mins
 
 Our sanitization function is limited to the user interface (UI). If we expose the Update method through an API or another medium, we remain susceptible to vulnerabilities. Let's use Copilot to remediate the vulnerability. 
 
@@ -173,6 +186,7 @@ Our sanitization function is limited to the user interface (UI). If we expose th
    
 2. Hover over the alert and select `Fix using Copilot`
 3. Copilot will propose a fix. Review proposed fix and click `Accept`
+4. Commit, push the fix, and merge in the PR to resolve the alert
 
 <details>
    <summary> Solution </summary>  
@@ -183,7 +197,7 @@ Our sanitization function is limited to the user interface (UI). If we expose th
 
 ### Bonus XSS Exercise: Use Copilot to understand CodeQL - 5 mins
 
-There is a custom codeql query written specifically for finding vue related xss vulnerabilities specific to this codebase.This query can be found in the `queries` folder. Use **Copilot Chat** to better understand this query?
+There is a custom codeql query written specifically for finding vue related xss vulnerabilities specific to this codebase.This query can be found in the `queries` folder. Use **Copilot Chat** to better understand this query.
 
 <details>
     <summary> Hint </summary>  
@@ -222,33 +236,15 @@ There is a custom codeql query written specifically for finding vue related xss 
   
 </details>
 
-## Lab 3 - Application Security Learning & Threat Modelling with GitHub Copilot  
+## Lab 3 - Threat Modelling with GitHub Copilot  
 
-### Exercise 1 - Application Security Learning - 5 mins
-
-**Scenario**
-
-You are a part of the development team, and a relative novice to the world of Application Security. But, let's assume one of the application code that you have written has returned an Injection vulnerability after a CodeQL scan in the ci/cd pileline and your pull request has been blocked from merging. 
-You have been assigned a ticket to fix the vulnerability, but since you are a newbee and have very limited exposure to Application Security Vulnerabilities, we will see how GitHub Copilot can explain you about an Injection vulnerability with an in context learning and explanation about SQL Injection.
-
-Let's ask GitHub Copilot to explain us what an SQL injection is in our codebase
-
-1. Navigate to `Copilot Chat` icon in your VisuL Studio Code IDE (Codespace)
-2. Open the `main.go` file under `gallery` module. Navigate to line 200 which represents a Injection Vulnerability and ask GitHub Copilot Chat to explain you the vulnerability
-     <details>
-    <summary> Solution </summary>
-       
-    ![learn-app-sec](https://github.com/octodemo/universe-wip/assets/79184790/e50d3566-5829-41eb-8782-f226bbfed061)
-
-     </details>
-
-### Exercise 2 - Threatmodelling with GitHub Copilot - 5 mins
+### Exercise 1` - Threatmodelling with GitHub Copilot - 5 mins
 
 **Scenario**
 
-Often we have seen that there is a big over reliance for Security Teams on Development teams when it comes to understanding the threat landscape of the application. Threatmodelling, a very essential security practise many a times gets delayed and overlooked because of Security teams are relaint on dev teams to sit with them and understand the application boundaries to come up with a proper threat model
+Threat modelling is often a manual and specialised task conducted by security teams. We can automate some of this process using Copilot.  
 
-In this **demo** we will be using GitHub Copilot Chat feature from a Security Practitioners perspective and see how using an AI assited tool a security architect can start getting more context about the application threat boundaries and to an extent do an exxective threatmodeeling independently.
+In this **demo** we will be using GitHub Copilot Chat feature from a Security Practitioners perspective and see how using an AI assited tool a security architect can start getting more context about the application threat boundaries.
 
 1. Let's Ask GitHub Copilot Chat to explain us all the DB interactions in the `gallery` module of the mona gallery application
     <details>
