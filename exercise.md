@@ -13,7 +13,7 @@ If you get stuck there are hints along the way. Additionaly you can access GIF-b
 We are excited to be shipping the feature **AI-generated custom patterns** at Universe 2023.
 In this exercise, we will generate a custom pattern using this feature. 
 <details>
-<summary>Prerequiste - secret scanning must be enabled for this exercise. This feature should already be enabled by default for for this repository. If not, please follow the instructions here to enable secret scanning. </summary>
+<summary>Prerequiste - secret scanning must be enabled for this exercise. This feature should already be enabled by default for this repository. If not, please follow the instructions here to enable secret scanning. </summary>
 
 1. Navigate to the `Settings` tab of the repository, click on the `Code security and analysis` section, and click `Enable` under secret scanning.
 
