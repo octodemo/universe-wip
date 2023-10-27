@@ -8,7 +8,7 @@ If you get stuck there are hints along the way. Additionaly you can access GIF-b
 
 ## Lab 1 - Secret Scanning AI 
 
-### Exercise 1 - AI-generated custom patterns
+### Exercise 1 - AI-generated custom patterns - 5 mins
 
 We are excited to be shipping the feature **AI-generated custom patterns** at Universe 2023.
 In this exercise, we will generate a custom pattern using this feature. 
@@ -63,7 +63,7 @@ You want to write a custom pattern to detect this.
 
     </details>
 
-### Exercise 2 - generic secret detection using AI
+### Exercise 2 - generic secret detection using AI - 5 mins
 
 At Universe 2023 we will also be releasing the **generic secret detection using AI** feature. Enabling this feature will use an AI model to detect additional secrets beyond the secrets detected with regular expression.
 
@@ -97,7 +97,7 @@ There are two tasks to remediate this vulnerability:
 1. sanitize input in the javascript (Exercise 1)
 2. fix the SQL prepare statement in the go code (Exercise 2)
 
-### Exercise 1 - AI generated autofix on javascript pull requests
+### Exercise 1 - AI generated autofix on javascript pull requests - 10 mins
 
 This Universe we will be releasing AI generated autofixes on the pull request. We will see this feature in action in this exercise. 
 
@@ -165,7 +165,7 @@ The autofix feature suggests fixes for CodeQL alerts raised as a part of the pul
 ![autofix](https://github.com/octodemo/universe-wip/assets/68650974/5a8e2c68-fc68-47b1-ae6d-c0814444530c)
 
 
-### Exercise 2 - remediating vulnerabilities with Copilot
+### Exercise 2 - remediating vulnerabilities with Copilot - 10 mins
 
 Our sanitization function is limited to the user interface (UI). If we expose the Update method through an API or another medium, we remain susceptible to vulnerabilities. Let's use Copilot to remediate the vulnerability. 
 
@@ -181,7 +181,7 @@ Our sanitization function is limited to the user interface (UI). If we expose th
 
 </details>
 
-### Bonus XSS Exercise: Use Copilot to understand CodeQL 
+### Bonus XSS Exercise: Use Copilot to understand CodeQL - 5 mins
 
 There is a custom codeql query written specifically for finding vue related xss vulnerabilities specific to this codebase.This query can be found in the `queries` folder. Use **Copilot Chat** to better understand this query?
 
@@ -224,7 +224,7 @@ There is a custom codeql query written specifically for finding vue related xss 
 
 ## Lab 3 - Application Security Learning & Threat Modelling with GitHub Copilot  
 
-### Exercise 1 - Application Security Learning
+### Exercise 1 - Application Security Learning - 5 mins
 
 **Scenario**
 
@@ -242,7 +242,7 @@ Let's ask GitHub Copilot to explain us what an SQL injection is in our codebase
 
      </details>
 
-### Exercise 2 - Threatmodelling with GitHub Copilot
+### Exercise 2 - Threatmodelling with GitHub Copilot - 5 mins
 
 **Scenario**
 
