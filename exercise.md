@@ -245,3 +245,30 @@ Let's ask GitHub Copilot to explain us what an SQL injection is in our codebase
 ### Exercise 2 - Threatmodelling with GitHub Copilot
 
 **Scenario**
+
+Often we have seen that there is a big over reliance for Security Teams on Development teams when it comes to understanding the threat landscape of the application. Threatmodelling, a very essential security practise many a times gets delayed and overlooked because of Security teams are relaint on dev teams to sit with them and understand the application boundaries to come up with a proper threat model
+
+In this **demo** we will be using GitHub Copilot Chat feature from a Security Practitioners perspective and see how using an AI assited tool a security architect can start getting more context about the application threat boundaries and to an extent do an exxective threatmodeeling independently.
+
+1. Let's Ask GitHub Copilot Chat to explain us all the DB interactions in the `gallery` module of the mona gallery application
+    <details>
+    <summary> Solution </summary>
+       
+   ![threat-modelling-1](https://github.com/octodemo/universe-wip/assets/79184790/104c8234-4eb0-40d2-8ce4-949ac8cc6571)
+    </details>
+
+    
+2. In the `storage` module lets ask GitHub Copilot Chat to explain us the threat landscape of the `BlobController.java` code
+    <details>
+    <summary> Solution </summary>
+        
+   ![threat-model-2](https://github.com/octodemo/universe-wip/assets/79184790/ce465948-c039-482f-bba4-1890230d48ce)
+
+    </details>
+
+
+
+
+
+
+
