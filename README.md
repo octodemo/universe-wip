@@ -18,7 +18,7 @@ This repository contains the source code for the `Mona Gallery` vulnerable web a
 
 ### Prerequisites
 
-Please make sure that you have all the prerequisites in place before we start of the wokshop
+Please make sure that you have all the prerequisites in place before we start the wokshop.
 
 1) Create a codespace from the repository
     <details>
@@ -29,7 +29,7 @@ Please make sure that you have all the prerequisites in place before we start of
      </details>
    
 
-2) Verify that the GitHub Copilot, GitHub Copilot Chat, and GitHub Copilot Lab plugins are pre-installed in your codespace. These installations should occur automatically when you start the codespace.
+2) Verify that GitHub Copilot, GitHub Copilot Chat, and GitHub Copilot Lab plugins are pre-installed in your codespace. These installations should occur automatically when you start the codespace.
 3) Configure the plugin to grant you access to GitHub copilot through the [githubuniverseworkshops](https://github.com/githubuniverseworkshops) Org that you have been granted access to
 4) Confirm that Advanced Security and all its features have been enabled on your repository
 
