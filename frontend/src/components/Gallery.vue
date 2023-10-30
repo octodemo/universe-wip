@@ -230,7 +230,15 @@
 import axios from 'axios';
 import { useAttrs } from 'vue';
 
-//add sanitization function here    
+function sanitizeInput(input) {
+    if (input == null) {
+        return "";
+    }
+    //escape all occurances of apostrophe
+    input = input.replace("'", "''");
+
+    return input;
+}   
 
 export default {
     name: "Gallery",
@@ -336,7 +344,8 @@ export default {
 
         putArtRequest(artItem) {
 
-            //add sanitization call here
+            artItem.description = sanitizeInput(artItem.description)
+            artItem.title = sanitizeInput(artItem.title)
             
             axios.put(
                 `http://localhost:8081/gallery/art/${artItem.id}`, artItem,
