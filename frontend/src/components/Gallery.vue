@@ -203,7 +203,7 @@ function sanitizeInput(input) {
         return "";
     }
     // Replace all occurrences of apostrophe with two consecutive apostrophes
-    input = input.replace("'", "''");
+    input = input.replace(/'/g, "''");
     // Remove all multi-line or single-line comments
     input = input.replace(/\/\*[\s\S]*?\*\/|\/\/.*/, "");
     //Remove all SQL comments
